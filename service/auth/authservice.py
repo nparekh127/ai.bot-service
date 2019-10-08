@@ -1,9 +1,22 @@
 from flask import jsonify
+import logging as logger
+logger.basicConfig(level="DEBUG")
 
 
 class AuthService:
 
-    def getName(self):
-        tasks = [{'id': 1000, 'name': "Breakfastsss"}, {'id': 1001, 'name': "Lunch"}]
+    def validateUser(self, request):
+        validationResult = {}
+        logger.log(1, "Validating user", "", "")
 
-        return jsonify({'tasks': tasks})
+        if request.json['uid'] == "admin" and request.json['pwd'] == "pass@123":
+            logger.log(1, "User validation successful", "", "")
+            validationResult["status"] = True
+            userinfo = {"fname": "Nevile", "surname": "Parekh"}
+            validationResult["userinfo"] = userinfo
+
+        else:
+            logger.log(1, "User validation un-successful", "", "")
+            validationResult["status"] = False
+
+        return  jsonify({'auth': validationResult})

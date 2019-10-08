@@ -1,17 +1,16 @@
-from flask import Flask
+from flask import Flask, request
 from service.auth.authservice import AuthService
 
 
-app = Flask(__name__)
+flaskAppInstance = Flask(__name__)
 
 
-@app.route('/')
-def index():
+@flaskAppInstance.route('/auth', methods=['POST'])
+def validateUser():
     auth = AuthService()
-    tasks = auth.getName()
 
-    return tasks
+    return auth.validateUser(request)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    flaskAppInstance.run(host="0.0.0.0", port=8181, debug=True)
