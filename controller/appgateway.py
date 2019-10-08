@@ -12,5 +12,12 @@ def validateUser():
     return auth.validateUser(request)
 
 
+@flaskAppInstance.route('/token', methods=['POST'])
+def getToken():
+    auth = AuthService()
+
+    return auth.generateToken(request)
+
+
 if __name__ == '__main__':
     flaskAppInstance.run(host="0.0.0.0", port=8181, debug=True)
