@@ -1,6 +1,7 @@
 from flask import Flask, request
 from service.auth.authservice import AuthService
 from service.file.fileservice import FileService
+from service.model.modelservice import ModelService
 
 flaskAppInstance = Flask(__name__)
 
@@ -28,7 +29,9 @@ def upload_file():
 
 @flaskAppInstance.route('/train', methods=['POST'])
 def train_model():
-    return ""
+    model_service = ModelService()
+
+    return model_service.train_model(request)
 
 
 if __name__ == '__main__':
