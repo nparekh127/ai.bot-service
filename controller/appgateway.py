@@ -1,22 +1,34 @@
 from flask import Flask, request
 from service.auth.authservice import AuthService
-
+from service.file.fileservice import FileService
 
 flaskAppInstance = Flask(__name__)
 
 
 @flaskAppInstance.route('/auth', methods=['POST'])
-def validateUser():
+def validate_user():
     auth = AuthService()
 
     return auth.validateUser(request)
 
 
 @flaskAppInstance.route('/token', methods=['POST'])
-def getToken():
+def get_token():
     auth = AuthService()
 
     return auth.generateToken(request)
+
+
+@flaskAppInstance.route('/upload', methods=['POST'])
+def upload_file():
+    file_service = FileService()
+
+    return file_service.upload(request.files['file'])
+
+
+@flaskAppInstance.route('/train', methods=['POST'])
+def train_model():
+    return ""
 
 
 if __name__ == '__main__':
