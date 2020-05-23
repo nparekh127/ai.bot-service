@@ -27,6 +27,15 @@ def upload_file():
     return file_service.upload(request.files['file'])
 
 
+@flaskAppInstance.route('/file', methods=['GET', 'POST'])
+def file():
+    file_service = FileService()
+    if request.method == 'GET':
+        return file_service.list_files()
+
+    if request.method == 'POST':
+        return file_service.file1(request.json['filename'])
+
 @flaskAppInstance.route('/train', methods=['POST'])
 def train_model():
     model_service = ModelService()
