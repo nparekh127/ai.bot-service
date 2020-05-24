@@ -15,4 +15,4 @@ class ModelService:
             model_service_helper = ModelServiceHelper()
             return model_service_helper.prepare_model(model_id)
 
-        return jsonify({'status': {'status': 404, 'desc': 'model id not found'}})
+        return jsonify({'status': {'status': 404, 'desc': 'model_id not found'}})
