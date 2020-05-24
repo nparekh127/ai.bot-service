@@ -54,10 +54,10 @@ class FileService:
 
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-    #########################
+    ###########################
     # fetch the metadata
     # from a pandas data-frame
-    #########################
+    ###########################
     def __fetch_metadata(self, df):
         meta = {
             'shape': {
