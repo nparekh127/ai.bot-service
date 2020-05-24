@@ -1,4 +1,4 @@
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.ensemble import RandomForestRegressor
 from flask import jsonify
 from sklearn.model_selection import train_test_split
@@ -7,7 +7,7 @@ from service.file.fileservice import FileService
 import pandas as pd
 
 
-MODEL_MAPPING = {'LR': LinearRegression(), 'RF': RandomForestRegressor()}
+MODEL_MAPPING = {'RPLR': LinearRegression(), 'RCLR': LogisticRegression(), 'ETRF': RandomForestRegressor()}
 DEFAULT_DATASET_PATH = '../dataset/csv/'
 
 class ModelServiceHelper:
@@ -29,8 +29,11 @@ class ModelServiceHelper:
         filename = model_config_dict.get('filename')
         df = pd.read_csv(DEFAULT_DATASET_PATH+filename)
 
-        features = model_config_dict.get('features')
         target = model_config_dict.get('target')
+        features = model_config_dict.get('features')
+        if len(features) == 0:
+            features = [c for c in df.columns.to_list() if c not in target]
+
         train_split = int(model_config_dict.get('train_split'))/100
 
         X_train, X_test, y_train, y_test = train_test_split(df[features], df[target],
