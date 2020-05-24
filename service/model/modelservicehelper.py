@@ -1,7 +1,8 @@
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from flask import jsonify
 
-MODEL_MAPPING = {'LR': LinearRegression()}
+MODEL_MAPPING = {'LR': LinearRegression(), 'RF': RandomForestRegressor()}
 
 
 class ModelServiceHelper:
