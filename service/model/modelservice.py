@@ -7,7 +7,7 @@ logger.basicConfig(level="DEBUG")
 class ModelService:
 
     def train_model(self, request):
-        logger.log(1, "Initiating training", "", "")
+        logger.log(1, "Initiating training...", "", "")
 
         if request['model_id']:
             model_id = request['model_id']
