@@ -1,7 +1,10 @@
 from flask import Flask, request
+from flask.json import jsonify
+
 from service.auth.authservice import AuthService
 from service.file.fileservice import FileService
 from service.model.modelservice import ModelService
+from service.model.modelservicehelper import ModelServiceHelper
 
 flaskAppInstance = Flask(__name__)
 
@@ -31,7 +34,9 @@ def upload_file():
 def file():
     file_service = FileService()
     if request.method == 'GET':
-        return file_service.list_files()
+        files = FileService.list_files()
+
+        return jsonify({'files': files})
 
     if request.method == 'POST':
         return file_service.file_meta(request.json['filename'])
@@ -41,7 +46,10 @@ def file():
 def train_model():
     model_service = ModelService()
 
-    return model_service.train_model(request)
+    if ModelServiceHelper.validate_req(request):
+        return model_service.train_model(request.json)
+    else:
+        return "invalid request"
 
 
 if __name__ == '__main__':

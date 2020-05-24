@@ -7,6 +7,7 @@ from os.path import isfile, join
 logger.basicConfig(level="DEBUG")
 
 ALLOWED_EXTENSIONS = set(['csv', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+DEFAULT_DATASET_PATH = '../dataset/csv/'
 
 
 class FileService:
@@ -17,7 +18,7 @@ class FileService:
     def upload(self, file):
         filename = secure_filename(file.filename)
         if filename and self.allowed_file_types(filename):
-            file.save('../dataset/csv/'+filename)
+            file.save(DEFAULT_DATASET_PATH+filename)
             return jsonify({'file': {'status': 200, 'desc': 'file saved'}})
         else:
             return jsonify({'file': {'status': 500, 'desc': 'file not saved'}})
@@ -25,15 +26,16 @@ class FileService:
     ####################
     # uploads file
     ####################
-    def list_files(self, extension=None, path='../dataset/csv/'):
+    @staticmethod
+    def list_files(extension=None, path=DEFAULT_DATASET_PATH):
         files = [f for f in listdir(path) if isfile(join(path, f))]
 
-        return jsonify({'files': files})
+        return files
 
     ####################
     # uploads file
     ####################
-    def file_meta(self, filename, path='../dataset/csv/'):
+    def file_meta(self, filename, path=DEFAULT_DATASET_PATH):
         extension = filename.rsplit('.', 1)[1].lower()
 
         if extension == 'csv':

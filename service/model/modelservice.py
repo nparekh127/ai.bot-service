@@ -6,13 +6,8 @@ logger.basicConfig(level="DEBUG")
 
 class ModelService:
 
-    def train_model(self, request):
+    def train_model(self, model_config_dict):
         logger.log(1, "Initiating training...", "", "")
+        model_service_helper = ModelServiceHelper()
 
-        if request.json['model_id']:
-            model_id = request['model_id']
-
-            model_service_helper = ModelServiceHelper()
-            return model_service_helper.prepare_model(model_id)
-
-        return jsonify({'status': {'status': 404, 'desc': 'model_id not found'}})
+        return model_service_helper.prepare_model(model_config_dict)

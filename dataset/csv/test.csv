@@ -1,5 +1,5 @@
-math,english,science,computer
-90,75,38,60
-87,70,42,52
-67,60,29,35
-90,80,91,48
+math,english,science,computer,result
+90,75,38,60,1
+87,70,20,52,0
+67,60,29,35,0
+90,80,91,48,1
